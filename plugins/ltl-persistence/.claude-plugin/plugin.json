@@ -1,0 +1,10 @@
+{
+  "name": "ltl-persistence",
+  "version": "1.0.0",
+  "description": "Token-lean, compaction-surviving persistence for Claude Code — set up and maintain a 'resume-here' handoff, an optional user-defined standing-rules file, and an opt-in PreCompact hook, all wired into the native auto-loaded layer (CLAUDE.md / memory). Improves cross-session memory at minimum token cost; ships zero rules of its own.",
+  "author": {
+    "name": "Lou Lohman"
+  },
+  "homepage": "https://github.com/louthelou/ltl-skills/tree/main/plugins/ltl-persistence",
+  "license": "MIT"
+}

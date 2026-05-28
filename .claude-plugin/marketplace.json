@@ -28,6 +28,16 @@
       "category": "productivity",
       "source": "./plugins/ltl-parity",
       "homepage": "https://github.com/louthelou/ltl-skills/tree/main/plugins/ltl-parity"
+    },
+    {
+      "name": "ltl-persistence",
+      "description": "Token-lean, compaction-surviving persistence: set up and maintain a 'resume-here' handoff, an optional user-defined standing-rules file, and an opt-in PreCompact hook — all wired into Claude Code's native auto-loaded layer so work survives compaction at minimum token cost. Ships zero rules of its own.",
+      "author": {
+        "name": "Lou Lohman"
+      },
+      "category": "productivity",
+      "source": "./plugins/ltl-persistence",
+      "homepage": "https://github.com/louthelou/ltl-skills/tree/main/plugins/ltl-persistence"
     }
   ]
 }

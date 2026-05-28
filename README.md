@@ -8,6 +8,7 @@ Lou Lohman's Claude Code skills, packaged as a marketplace you can add directly 
 |---|---|---|
 | `ltl-seo` | `seo-audit` | All-in-one, **verification-first** SEO: technical, on-page, structured data, internal linking & site architecture, keyword & content strategy, competitor analysis, AEO / AI-visibility, and programmatic-SEO-at-scale. Inspects the real source/HTML before claiming anything is missing, web-verifies time-sensitive guidance, and pushes back on deprecated tactics. |
 | `ltl-parity` | `parity` | Guided **cross-codebase parity** — keep a website and its companion app (or any deliberately mirrored pair) in sync without silent drift or mis-ports. Classifies each change, warns on safety/security/ambiguous risk, and verifies both sides. |
+| `ltl-persistence` | `persistence` | Token-lean, **compaction-surviving persistence** — set up and maintain a "resume-here" handoff, an optional user-defined standing-rules file, and an opt-in PreCompact hook, all wired into Claude Code's native auto-loaded layer so work survives compaction at minimum token cost. Ships zero rules of its own. |
 
 ## Install
 
@@ -22,6 +23,7 @@ Then install whichever plugins you want:
 ```
 /plugin install ltl-seo@louthelou
 /plugin install ltl-parity@louthelou
+/plugin install ltl-persistence@louthelou
 ```
 
 Once installed, each skill activates automatically when it's relevant. You can also invoke a skill directly by its `plugin:skill` name, e.g. `ltl-seo:seo-audit`.
