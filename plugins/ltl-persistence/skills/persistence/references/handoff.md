@@ -2,6 +2,10 @@
 
 A HANDOFF is the single "resume-here" snapshot a fresh or post-compaction session reads first. It holds *volatile current state* — not stable project facts (those belong in `CLAUDE.md`).
 
+## One HANDOFF per project — its own sessions maintain it
+
+Each project gets its **own** HANDOFF at its root, wired to its own auto-loaded layer; they're never shared. **Checkpoint and prune it from *within* that project, where the live context is — never edit another project's HANDOFF from a different session, or you're pruning state you can't see.** And not every project needs one: a HANDOFF is for ongoing volatile work; a stable repo's state lives in git + `CLAUDE.md`.
+
 ## Lean structure (top-to-bottom = most-needed first)
 
 - **Now** — current task + the very next step. The first thing a cold session needs.

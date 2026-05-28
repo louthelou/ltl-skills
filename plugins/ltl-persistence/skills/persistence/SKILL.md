@@ -18,7 +18,7 @@ Both are solved by the same thing: a lean, wired, on-demand-structured persisten
 
 ## The pieces (and where the detail lives)
 
-- **HANDOFF** — a lean "resume-here" snapshot: current state, open threads, deferred gaps. → `references/handoff.md`
+- **HANDOFF** — a lean "resume-here" snapshot: current state, open threads, deferred gaps. **One per project, maintained only by sessions working in that project** (don't cold-edit another project's HANDOFF). → `references/handoff.md`
 - **Discovery wiring** — a one-line pointer in the auto-loaded layer so the handoff is *found* after a compaction. The crux. → `references/handoff.md`
 - **Standing rules** (optional) — durable, user-defined behavioral rules. **Ships empty; captures the user's own.** → `references/standing-rules.md`
 - **PreCompact hook** (opt-in) — fires at compaction time to guarantee the "read the handoff" pointer survives. → `references/precompact-hook.md`
