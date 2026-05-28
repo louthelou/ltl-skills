@@ -1,0 +1,33 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "louthelou",
+  "owner": {
+    "name": "Lou Lohman"
+  },
+  "metadata": {
+    "description": "Lou Lohman's Claude Code skills — a verification-first all-in-one SEO auditor and a guided cross-codebase parity workflow.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "ltl-seo",
+      "description": "All-in-one, verification-first SEO: technical, on-page, structured data, internal linking & site architecture, keyword & content strategy, competitor analysis, AEO/AI-visibility, and programmatic-SEO-at-scale. Inspects the real source/HTML before claiming anything is missing, web-verifies time-sensitive guidance, and pushes back on deprecated tactics.",
+      "author": {
+        "name": "Lou Lohman"
+      },
+      "category": "productivity",
+      "source": "./plugins/ltl-seo",
+      "homepage": "https://github.com/louthelou/ltl-skills/tree/main/plugins/ltl-seo"
+    },
+    {
+      "name": "ltl-parity",
+      "description": "Guided cross-codebase parity for keeping two (or more) related projects in sync — e.g. a website and its companion app. Classifies every change, warns on safety/security/ambiguous risk, and verifies both sides instead of blindly copying.",
+      "author": {
+        "name": "Lou Lohman"
+      },
+      "category": "productivity",
+      "source": "./plugins/ltl-parity",
+      "homepage": "https://github.com/louthelou/ltl-skills/tree/main/plugins/ltl-parity"
+    }
+  ]
+}

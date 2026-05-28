@@ -1,0 +1,10 @@
+{
+  "name": "ltl-seo",
+  "version": "1.0.0",
+  "description": "All-in-one, verification-first SEO auditor — technical, on-page, structured data, internal linking & site architecture, keyword & content strategy, competitor analysis, AEO/AI-visibility, and programmatic-SEO-at-scale. Inspect-first, web-verify, push back on deprecated advice.",
+  "author": {
+    "name": "Lou Lohman"
+  },
+  "homepage": "https://github.com/louthelou/ltl-skills/tree/main/plugins/ltl-seo",
+  "license": "MIT"
+}

@@ -1,0 +1,17 @@
+# OS cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Node (only relevant if build tooling is added later)
+node_modules/
+
+# Local env / secrets
+.env
+.env.*

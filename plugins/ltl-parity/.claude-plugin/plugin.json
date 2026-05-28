@@ -1,0 +1,10 @@
+{
+  "name": "ltl-parity",
+  "version": "1.0.0",
+  "description": "Guided cross-codebase parity — keep a website and its companion app (or any mirrored pair) in sync without silent drift or mis-ports. Classifies each change, warns on safety/security/ambiguous risk, and verifies both sides.",
+  "author": {
+    "name": "Lou Lohman"
+  },
+  "homepage": "https://github.com/louthelou/ltl-skills/tree/main/plugins/ltl-parity",
+  "license": "MIT"
+}
