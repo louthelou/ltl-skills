@@ -40,6 +40,16 @@ These skills are original works, written from functional specifications rather t
 
 This repo is built to grow. Each skill is its own plugin under `plugins/<name>/`, with a `.claude-plugin/plugin.json` and a `skills/<skill>/SKILL.md`. To add one: create the plugin folder, then add an entry to `.claude-plugin/marketplace.json`.
 
+## Updating a skill
+
+This repo is the single source of truth. To change a skill:
+
+1. Edit the files under `plugins/<plugin>/skills/<skill>/` — the `SKILL.md` and/or its `references/`.
+2. Commit and push to `main`.
+3. Pull the new version: `/plugin marketplace update louthelou`, then `/plugin update <plugin>` (or use the GUI's update button).
+
+If you've installed a skill as a plugin, don't also keep a separate local file-based copy of it — the plugin is the live, updatable copy, and a stray local copy will go stale and shadow it.
+
 ## License
 
 [MIT](./LICENSE) © 2026 Lou Lohman. Use them, fork them, adapt them.
