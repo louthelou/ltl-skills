@@ -20,6 +20,8 @@ A skill that blindly copied changes from one to the other would corrupt the targ
 
 **The prime directive:** never silently diverge, and never silently mis-port. Every change is either mirrored, deliberately skipped (with a recorded reason), or surfaced to the user as risky. Drift that nobody decided on is the failure this skill prevents.
 
+**Source-of-truth default — the newer project usually wins, but verify first.** When you find a discrepancy (one side has something the other lacks, or they differ and intent is unclear), default to treating the **newer project's files as authoritative** — they more often reflect the latest decision. This never replaces the verify-before-acting gate below: the older artifact may be deliberately kept or worth porting forward, so always check *why* the discrepancy exists before resolving it. The same kind of discrepancy can resolve opposite ways — a guide the newer side **deleted** should be removed from the staler side, while a record the staler side is simply **missing** should be ported to it.
+
 ## Phase 0 — Establish the pair and the mapping
 
 Before syncing anything, you need to know which two projects, and how they map.
