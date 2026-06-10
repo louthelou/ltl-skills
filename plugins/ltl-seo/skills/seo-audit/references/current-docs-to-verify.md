@@ -14,6 +14,7 @@ When in doubt, search for the topic + "Google Search Central" or "developers.goo
   - Each lists required and recommended properties (these change)
 - **Rich Results Test (live validator):** https://search.google.com/test/rich-results
   - Paste a URL or HTML; tells you exactly which rich results the page is eligible for
+  - **Caveat:** it only reports types Google still renders. Deprecated/removed types (HowTo; FAQ from ~June 2026) won't appear here even when the markup is valid Schema.org — absence in this tool ≠ invalid structured data. Distinguish *eligibility* (this tool) from *validity* (Schema.org).
 
 ### Core Web Vitals & Page Experience
 
@@ -42,8 +43,8 @@ When in doubt, search for the topic + "Google Search Central" or "developers.goo
 
 The following topics turn over fast — always web-search before recommending:
 
-- **FAQ rich results** — deprecated for most sites in May 2026 (verify the current status before recommending FAQPage schema for SERP visibility)
-- **HowTo rich results** — also deprecated for most sites; verify current status
+- **FAQ rich results** — removed for *all* sites on 7 May 2026 (including the government/health sites kept after the Aug 2023 restriction). FAQ support also drops from the Rich Results Test (~June 2026) and the Search Console API (~Aug 2026). FAQPage markup is still parsed for entity understanding but yields no SERP feature. Verify before recommending FAQPage for SERP visibility.
+- **HowTo rich results** — fully removed (2023; no surviving eligible sites). Don't recommend HowTo schema for SERP appearance; verify if a client insists.
 - **AMP** — deprecated as Top Stories requirement; verify Google's current stance
 - **Sitelinks search box** (SearchAction) — verify the current spec; the property structure has changed before
 - **Author markup** (`author`, `sameAs`) — guidance shifted with E-E-A-T updates
@@ -69,7 +70,7 @@ This format makes the recommendation traceable and lets the next audit (yours or
 
 When pushing back on a deprecated recommendation, cite the source and date:
 
-> The original audit recommends adding FAQ schema for rich snippets. Pushing back: FAQ rich results were deprecated for most sites in May 2026 ([Google announcement, accessed 2026-05-25](https://developers.google.com/search/blog/...)). The structured data still aids entity understanding but no longer produces SERP rich results.
+> The original audit recommends adding FAQ schema for rich snippets. Pushing back: FAQ rich results were removed for all sites in May 2026 ([Google announcement, accessed 2026-05-25](https://developers.google.com/search/blog/...)). The structured data still aids entity understanding but no longer produces SERP rich results.
 
 ## A note on Schema.org
 

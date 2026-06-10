@@ -28,7 +28,7 @@ Before syncing anything, you need to know which two projects, and how they map.
 
 1. **Get the two project roots.** If the user didn't name them, ask: "Which two projects? Give me the paths or names." Don't guess.
 2. **Find the mapping doc.** Look for an existing site↔app mapping (e.g. `HANDOFF.md`, `PARITY.md`, a section in `CLAUDE.md`/`AGENTS.md`). This doc is the source of truth for: which file in A corresponds to which in B, what translation each pair needs (HTML→MD, CSS→StyleSheet, etc.), and the explicit "propagates / web-only / app-only" lists.
-3. **If no mapping doc exists, create one first.** You cannot reliably sync without it. Walk both trees, propose a file-map + translation rules + propagation rules, and write it to a `HANDOFF.md`-style doc. Get the user to confirm the divergence lists (what's intentionally one-sided) before proceeding — those lists are judgment calls only the user can ratify.
+3. **If no mapping doc exists, create one first.** You cannot reliably sync without it. **Start from the bundled scaffold `references/mapping-doc-template.md`** — it has the file-map, propagation lists, intentional-divergence table, and translation cheatsheet already laid out. Walk both trees, fill it in with the real file-map + translation rules + propagation rules, and write it to a `HANDOFF.md`-style doc. Get the user to confirm the divergence lists (what's intentionally one-sided) before proceeding — those lists are judgment calls only the user can ratify.
 
 > The mapping doc is the foundation. A parity pass without one is guessing. If you find yourself inferring "this probably maps to that," stop and write the mapping down + confirm it.
 

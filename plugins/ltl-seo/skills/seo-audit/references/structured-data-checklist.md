@@ -15,7 +15,7 @@ When a schema is "expected," it means it commonly appears on this page type AND 
 
 **Optional:**
 - `SearchAction` (as `potentialAction` on WebSite) — eligible for sitelinks search box on branded SERPs. Requires the site actually handle the URL pattern (e.g., `?q={search_term_string}`).
-- `FAQPage` — if the homepage has a substantive FAQ section. Note: FAQ rich results deprecated May 2026; structured data still aids entity understanding.
+- `FAQPage` — if the homepage has a substantive FAQ section. Note: FAQ rich results removed for all sites May 2026; markup is still parsed for entity understanding but produces no SERP feature. Only emit it if the same Q&A is visible on the page (Google's visible-content rule).
 
 **Avoid (commonly wrongly recommended):**
 - `Article` on the homepage — homepage is not an article
@@ -56,7 +56,7 @@ When a schema is "expected," it means it commonly appears on this page type AND 
 **Expected:**
 - `FAQPage` with each Question + Answer pair as `mainEntity`
 
-**Verify:** FAQ rich results are deprecated for most sites as of May 2026 — structured data still helps entity understanding but won't produce SERP rich results. Don't recommend adding it solely for SERP appearance.
+**Verify:** FAQ rich results were removed for all sites as of May 2026 — structured data still helps entity understanding but won't produce SERP rich results. Don't recommend adding it solely for SERP appearance.
 
 ## Recipe page
 

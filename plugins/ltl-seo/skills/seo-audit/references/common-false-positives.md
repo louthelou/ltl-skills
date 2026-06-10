@@ -58,11 +58,11 @@ A catalog of specific claims AI audits routinely make that are usually wrong, pl
 
 ## "Add FAQ schema for rich snippets"
 
-**Why it's usually STALE:** Google deprecated FAQ rich results for most sites in May 2026 — they no longer appear in search results except for authoritative government/health sites. The structured data is still useful for entity understanding, but the prominent SERP-treatment benefit is gone.
+**Why it's usually STALE:** Google removed FAQ rich results entirely on 7 May 2026 — they no longer appear in search for *any* site, including the authoritative government/health sites that kept them after the August 2023 restriction. (FAQ support also drops from the Rich Results Test in June 2026 and the Search Console API in August 2026.) The structured data is still parsed for entity understanding, but the SERP-treatment benefit is gone for everyone.
 
-**Verify:** Search current Google Search Central docs for "FAQPage structured data" — note the deprecation status.
+**Verify:** Search current Google Search Central docs for "FAQPage structured data" — confirm the May 2026 removal still stands.
 
-**Rebuttal:** "FAQ rich results were deprecated in May 2026 for most sites; the structured data still aids entity understanding but no longer produces visible SERP rich results. Worth adding only if optimizing for entity recognition, not for SERP real estate."
+**Rebuttal:** "FAQ rich results were removed for all sites in May 2026; FAQPage markup is still parsed for entity understanding but no longer produces any visible SERP rich result. Worth keeping/adding only for entity recognition, not for SERP real estate."
 
 ## "Add AMP"
 

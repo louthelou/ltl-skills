@@ -41,7 +41,7 @@ Answer engines reason over entities (people, organizations, products, concepts),
 Structured data (JSON-LD) helps machines understand entities and relationships, which can support AI comprehension of your content. But keep two limits in view:
 
 - It is **not a magic citation trigger.** Adding schema does not entitle a page to be quoted by an assistant.
-- Apply the same currency discipline as the rest of the SEO audit: several rich-result types have been deprecated, and what aids machine understanding versus what produces a visible SERP feature are different questions. **Web-verify the current status of any schema type before recommending it** (the main skill's verification methodology applies here unchanged — for example, FAQ rich results were deprecated for most sites by 2026, though the markup can still aid entity understanding).
+- Apply the same currency discipline as the rest of the SEO audit: several rich-result types have been deprecated, and what aids machine understanding versus what produces a visible SERP feature are different questions. **Web-verify the current status of any schema type before recommending it** (the main skill's verification methodology applies here unchanged — for example, FAQ rich results were removed for all sites in May 2026, though the markup can still aid entity understanding).
 
 Recommend structured data for genuine entity/relationship clarity, not as an AEO silver bullet.
 

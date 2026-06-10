@@ -13,7 +13,7 @@ LLM-generated SEO work fails in two distinct, repeatable ways. Every part of thi
 
 1. **Confabulating absences.** "No robots.txt." "No sitemap." "Canonical tags missing." "No JSON-LD found." These claims appear in nearly every AI SEO audit and are usually wrong — the auditor looked at rendered visible content and never actually requested `/robots.txt`, `/sitemap.xml`, or read the document `<head>`. The fix: curl those URLs / grep the source before claiming absence.
 
-2. **Stale recommendations from training data.** Confidently recommending FAQ schema for rich snippets (deprecated for most sites by 2026), `role="img"` on decorative icons (they should be `aria-hidden`), AMP (largely deprecated), or outdated structured-data property names. The fix: web-search the current search-engine documentation for the specific feature before reporting it.
+2. **Stale recommendations from training data.** Confidently recommending FAQ schema for rich snippets (FAQ rich results were removed for *all* sites in May 2026), `role="img"` on decorative icons (they should be `aria-hidden`), AMP (largely deprecated), or outdated structured-data property names. The fix: web-search the current search-engine documentation for the specific feature before reporting it.
 
 Both failure modes are eliminated by the same discipline. Apply it to every section below.
 
@@ -99,7 +99,7 @@ One of the most valuable invocations. Take the other audit's claims one by one a
 | Original claim | Verdict | Evidence |
 |---|---|---|
 | "Missing robots.txt" | False | curl returns 200, content present |
-| "Add FAQ schema for rich results" | Stale | FAQ rich results deprecated for most sites (cite) |
+| "Add FAQ schema for rich results" | Stale | FAQ rich results removed for all sites May 2026 (cite) |
 | "Add WebApplication schema" | Real | curl shows only WebSite + Organization; gap confirmed |
 ```
 

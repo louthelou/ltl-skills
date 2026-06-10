@@ -2,6 +2,8 @@
 
 Concrete commands and inspection points for Phase 1 (ground-truth inventory). Run the checks that apply to the audit scope. Cite the actual output as evidence in findings — don't claim absence without showing the failed check.
 
+> **Shell note:** the snippets here (and in the other references) assume a **bash + GNU coreutils** environment — they use process substitution `<(...)`, `comm`, `md5sum`, and GNU `grep`/`xargs` flags. Run them via the Bash tool, not PowerShell or stock macOS. On Windows, use the Bash tool; on macOS, `md5sum` → `md5`.
+
 ## Robots, sitemap, headers
 
 ```bash
@@ -50,6 +52,7 @@ Cross-reference the page type against `structured-data-checklist.md` to identify
 
 Use Google's Rich Results Test for live validation:
 - https://search.google.com/test/rich-results — paste URL or HTML; tells you which rich-result types are eligible
+- It only reports types Google still renders. Removed types (HowTo; FAQ from ~June 2026) won't show even when the markup is valid Schema.org — so absence here means *not eligible for a SERP feature*, not *invalid*. Keep eligibility (this tool) separate from validity (validator.schema.org).
 
 ## Codebase grep (when you have filesystem access)
 

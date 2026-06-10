@@ -29,6 +29,8 @@ Hooks live in `settings.json` (user-level or project-level `.claude/settings.jso
 
 Replace `<abs-path>` with the installed skill's asset directory. Editing `settings.json` directly works, or use the `update-config` skill. Reload Claude Code so it picks up the hook.
 
+No `matcher` field is set above, so the hook fires on **both** compaction triggers — manual (`/compact`) and automatic (context-limit). That's the intended default here. To scope it, add `"matcher": "auto"` (auto-compaction only) or `"matcher": "manual"` to the `PreCompact` entry.
+
 ## Uninstall
 
 Remove the `PreCompact` entry from `settings.json`.
