@@ -38,8 +38,9 @@ Answer engines reason over entities (people, organizations, products, concepts),
 
 ## Structured data — role and limits
 
-Structured data (JSON-LD) helps machines understand entities and relationships, which can support AI comprehension of your content. But keep two limits in view:
+Structured data (JSON-LD) helps machines understand entities and relationships, which can support AI comprehension of your content. But keep three limits in view:
 
+- **Google states there is no special structured data for AI features.** No schema type makes a page eligible for AI surfaces (see the AI optimization guide cited above). Recommend structured data on its ordinary merits — entity clarity and rich-result eligibility where one still exists — never as an AI-visibility lever.
 - It is **not a magic citation trigger.** Adding schema does not entitle a page to be quoted by an assistant.
 - Apply the same currency discipline as the rest of the SEO audit: several rich-result types have been deprecated, and what aids machine understanding versus what produces a visible SERP feature are different questions. **Web-verify the current status of any schema type before recommending it** (the main skill's verification methodology applies here unchanged — for example, FAQ rich results were removed for all sites in May 2026, though the markup can still aid entity understanding).
 
@@ -49,13 +50,32 @@ Recommend structured data for genuine entity/relationship clarity, not as an AEO
 
 The same signals that make content trustworthy to classic search tend to make it a better citation candidate: demonstrable expertise, accuracy, clear sourcing, and recency for time-sensitive topics. There's no separate "AEO authority" dial to turn — invest in the substance. Where a topic is time-sensitive, current and dated content is more likely to be both ranked and quoted.
 
-## llms.txt and similar — emerging, verify before requiring
+## Google has published a position — use it
 
-Conventions such as an `llms.txt` file (a proposed plain-text file advertising a site's key content to LLMs) are **emerging and not universally adopted**. Do not present them as requirements or as established ranking/citation factors.
+Google now documents this directly in **"Optimizing your website for generative AI features on Google Search"**
+(https://developers.google.com/search/docs/fundamentals/ai-optimization-guide),
+announced May 2026. It removes most of the guesswork for Google specifically, and it is the citation to reach for whenever a client or another audit proposes an "AEO/GEO" tactic.
 
-- If you mention them, label them clearly as experimental conventions with uneven (or unconfirmed) support among actual engines.
-- **Web-verify current adoption before recommending** — check whether the specific engines the user cares about actually consume the file today, and say what you found (including "no confirmed support" if that's the case).
-- Treat implementing one as low-cost, low-confidence experimentation, not as a checklist item with known payoff.
+What Google states:
+
+- **No special files or markup are needed.** You do not need to create machine-readable files, "AI text files," special markup, or Markdown to appear in Google Search including its generative AI features.
+- **No special structured data exists for AI features.** There is no schema.org type that makes a page eligible for AI surfaces.
+- **Google's AI features run on the same ranking systems** as the rest of Search. Ordinary SEO fundamentals — crawlable, indexable, genuinely useful content — are the optimization.
+- **Google explicitly names ineffective tactics:** content "chunking," keyword-variant rewrites of the same page, and pursuing inauthentic mentions.
+
+### llms.txt specifically
+
+**Google Search does not use `llms.txt`.** Per Google, maintaining one "will neither harm nor help your site's visibility or rankings in Google Search." Google has also said it is *fine* to keep one if other systems consume it — so the correct posture is neutral, not prohibitive.
+
+How to report it:
+
+- Never present `llms.txt` as a requirement, a ranking factor, or a Google-visibility tactic. That claim is now demonstrably wrong, not merely unverified.
+- If a client already has one, leave it. It costs nothing and may serve non-Google consumers.
+- **Other engines are a separate question.** Google's position does not speak for Perplexity, OpenAI, Anthropic, or any other assistant. If the client cares about a specific engine, web-verify that engine's behavior and report what you actually found — including "no confirmed support."
+
+### When someone pitches a GEO/AEO tactic
+
+Ask the two questions that resolve most of them: *does the engine's own documentation say it uses this?* and *would this be worth doing if AI answer engines did not exist?* A tactic that fails both is usually a repackaged 2010s SEO trick. Point at the Google guide and move on.
 
 ## Measuring AI visibility today
 

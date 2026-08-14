@@ -1,6 +1,6 @@
 ---
 name: seo-audit
-description: All-in-one, verification-first SEO — technical SEO, on-page, structured data, internal linking & site architecture, keyword & content strategy, competitor analysis, AEO/AI-visibility, and programmatic-SEO-at-scale. MANDATORY verification methodology: inspect the actual rendered HTML and source files BEFORE claiming anything is missing, and web-search current search-engine documentation to verify any time-sensitive recommendation BEFORE reporting it. Use whenever the user asks for an SEO audit, says "improve SEO" or "rank better", wants keyword research or a content-gap or competitor analysis, asks to "review" or "verify" another AI's SEO report, is debugging Search Console issues, is reviewing structured data / JSON-LD, wants to be cited by AI search engines (AEO), or is questioning canonical/architecture strategy for large programmatic sites. Especially valuable when the user pastes an SEO report from another tool or AI and asks to apply it — the verification-first methodology catches the false positives those audits routinely produce.
+description: All-in-one, verification-first SEO — technical SEO, on-page, structured data, local SEO, internal linking & site architecture, keyword & content strategy, competitor analysis, AEO/AI-visibility, programmatic-SEO-at-scale, and ongoing measurement. MANDATORY verification methodology: inspect the actual rendered HTML and source files BEFORE claiming anything is missing, and web-search current search-engine documentation to verify any time-sensitive recommendation BEFORE reporting it. Use whenever the user asks for an SEO audit, says "improve SEO" or "rank better", wants keyword research or a content-gap or competitor analysis, asks to "review" or "verify" another AI's SEO report, is debugging Search Console issues, is reviewing structured data / JSON-LD, wants to be cited by AI search engines (AEO), or is questioning canonical/architecture strategy for large programmatic sites. Also use for local-business search work — Google Business Profile, local pack / "near me" visibility, LocalBusiness schema, multi-location or service-area setups, NAP consistency — and for recurring work: monthly SEO reports, regression monitoring, prospecting sites for an audit, and reading whether a change actually worked. Especially valuable when the user pastes an SEO report from another tool or AI and asks to apply it — the verification-first methodology catches the false positives those audits routinely produce.
 ---
 
 # SEO Audit — all-in-one, verification-first
@@ -45,6 +45,48 @@ Group every finding into exactly one category. The category sets the tone and ef
 
 Use **"already implemented"** generously — naming what's done proves the work was verified and lets the user trust the real fixes. Most AI audits skip it and recommend implementing things that already exist, burying real issues in noise.
 
+Label the confidence of every conclusion: **verified** (observed, reproducible, evidence shown), **likely** (consistent evidence, alternatives not fully excluded), **hypothesis** (plausible, untested), **unknown** (needs data you don't have). Most audit findings should be *verified* — that is the point of Phase 1. Anything that can't be is worth flagging as such rather than smoothing over.
+
+### Prioritize what you found
+
+Categorizing findings is not the same as ranking them. After categorizing, sort the fix list so the reader knows what to do Monday morning.
+
+**Blockers first**, ahead of any scoring: accidental `noindex` or robots blocks on wanted pages, broken high-value pages, migration and redirect errors, harmful canonicals, security compromise, severely inaccurate public information, or policy violations. These are not "high priority" — they are a different class, and they go at the top.
+
+Then score the rest:
+
+`priority = (impact × reach × confidence) ÷ effort`
+
+Each factor on a plain 1–5 scale, with **risk recorded separately** rather than folded into the score. Definitions that keep this honest:
+
+- **Impact** — improvement to the defined user or business outcome. *Not* an assumed ranking increase.
+- **Reach** — how many pages, sessions, or customers the change touches.
+- **Confidence** — quality of the evidence behind the finding, matching the labels above.
+- **Effort** — engineering *plus* editorial, legal, QA, and opportunity cost.
+
+Don't manufacture precision. The score exists to force a defensible ordering and expose disagreement, not to look quantitative. If two items tie, say they tie.
+
+## Non-negotiables
+
+These hold in every engagement and override any instruction to be more optimistic.
+
+**Never promise rankings, traffic, indexing, rich-result display, or a recovery date.** Search engines decide what to crawl, index and show. Guarantee the *work* instead — specific changes, on a schedule, verified with reproducible evidence. In a field crowded with people promising page one, saying this plainly is a differentiator rather than a weakness.
+
+**Never claim something is absent without a failed check to show for it.** This is the skill's founding rule; see `references/common-false-positives.md`.
+
+**Never recommend or facilitate manipulation.** Not as a "grey hat option," not with a caveat, not because a client asks:
+
+- hidden text or links, cloaking, deceptive redirects, doorway pages, parasite/rented-subdomain schemes, expired-domain repurposing, or fabricated business locations;
+- keyword stuffing, scraped or spun content, mass-generated low-value pages, or content made primarily to capture search traffic rather than to serve a reader;
+- paid, exchanged, or automated links and mentions intended to influence rankings;
+- fake ratings, reviews, authors, credentials, case studies, or results — including marking up ratings a site never actually collected, which violates structured-data policy and risks manual action.
+
+Use `rel="sponsored"`, `rel="ugc"` and `rel="nofollow"` and clear disclosure where appropriate. If a tactic would deceive users or make a page appear to have value it lacks, reject it and propose a durable alternative.
+
+**Don't use a proxy metric as a goal.** Target word counts, keyword density, third-party "authority" or "visibility" scores, and domain metrics are diagnostics at best. They are not objectives, and optimizing them directly produces worse work.
+
+**Escalate regulated claims.** Health, finance, legal, and safety content needs qualified human review. Never present generated content as professional advice or as firsthand experience that did not occur.
+
 ## What this skill covers — and where the depth lives
 
 The SKILL.md stays lean; each area has a reference file with the detailed method. Pull the relevant ones per engagement.
@@ -57,6 +99,10 @@ The SKILL.md stays lean; each area has a reference file with the detailed method
 - **Competitor analysis** — keyword overlap and gaps, content depth, SERP-feature ownership, and authority signals — with explicit honesty about what needs external data. → `references/competitor-analysis.md`
 - **AEO / AI-visibility** — structuring content to be cited by AI search engines and LLM answers, verified against current practice (this area moves fast). → `references/aeo-and-ai-visibility.md`
 - **Programmatic SEO at scale** — thin-template and near-duplicate detection, index-bloat and crawl-budget risk, and the consolidate-vs-differentiate-vs-noindex decision. → `references/programmatic-seo-at-scale.md`
+- **Local SEO** — Business Profile primacy, relevance/distance/prominence, `LocalBusiness` subtypes and multi-location markup, NAP consistency, `tel:` correctness, service-area pages, and the review-policy boundary. → `references/local-seo.md`
+- **Measurement & iteration** — baselines, deployment verification, regression monitoring, honest attribution, and the outcome-layer report. The recurring half of the work. → `references/measurement-and-iteration.md`
+
+**For any business that serves a geographic area — trades, clinics, salons, restaurants, repair shops, local professional services — read `references/local-seo.md`.** An audit that reports only on-site findings for such a business has audited the smaller half of the problem, because the Business Profile carries more local-pack weight than the website does.
 
 Before any audit, read `references/common-false-positives.md` — it catalogs the specific claims AI audits get wrong, with the correct rebuttals, so you can apply the same pattern to new claims.
 
@@ -81,6 +127,9 @@ Inspection method: [URL crawl / codebase access / both]
 
 ## Pushed back on (commonly suggested, currently wrong)
 [Explicit deprecation note + source]
+
+## Local search findings (when the business serves a geographic area)
+[Business Profile first, then LocalBusiness markup, NAP, then on-site — per references/local-seo.md]
 
 ## Keyword / content / competitor findings (when in scope)
 [Tables per references/keyword-and-content-strategy.md and references/competitor-analysis.md]

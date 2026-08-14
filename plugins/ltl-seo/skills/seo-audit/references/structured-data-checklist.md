@@ -79,8 +79,19 @@ When a schema is "expected," it means it commonly appears on this page type AND 
 
 ## Local business
 
-**Expected:**
-- `LocalBusiness` (or more specific subtype) — with `name`, `address` (PostalAddress), `telephone`, `openingHoursSpecification`, `geo` (GeoCoordinates)
+Full treatment in `local-seo.md` — including Business Profile primacy, which outweighs anything on this page. Summary:
+
+**Required by Google:** `name`, `address` (a `PostalAddress`).
+
+**Recommended:** `telephone`, `geo` (`GeoCoordinates`), `openingHoursSpecification`, `priceRange`, `url`.
+
+**Use the most specific subtype**, not bare `LocalBusiness` — `AutoRepair`, `HairSalon`, `Dentist`, `Restaurant`, `Plumber`, `DaySpa`, `HealthClub`, and so on. `LocalBusiness` is a subtype of `Organization`, so the Organization fields are worth following too.
+
+**One entity per physical location.** A two-location business needs two nodes, each with its own address and hours, ideally on its own location page.
+
+**Avoid:** `aggregateRating` or `review` describing the business's *own* self-declared ratings. Those properties are for sites that genuinely capture reviews about other businesses. Marking up ratings the site never collected violates Google's structured-data policies and risks manual action.
+
+**The usual real finding is a hollow entity, not a missing one** — the correct type declared with only `name`, `logo` and `url`, missing the required `address`. Enumerate properties, not just types, and check microdata as well as JSON-LD.
 
 ## Author profile / About page
 

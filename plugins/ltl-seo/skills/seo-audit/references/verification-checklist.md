@@ -26,6 +26,31 @@ curl -sI https://SITE.com/ | grep -iE 'strict-transport|content-type-options|con
 
 If the auditor or report claims any of these are missing, run the check and either confirm or push back with the output.
 
+### Two distinctions that cause expensive mistakes
+
+**`robots.txt` controls crawling, not indexing.** A URL disallowed in `robots.txt` can still be indexed — Google may list it (usually without a snippet) based on external links, precisely *because* it was never crawled and the `noindex` was never seen. To keep a page out of the index, leave it crawlable and serve `noindex` via meta robots or the `X-Robots-Tag` header. Recommending `Disallow:` as a way to deindex is a common and counterproductive error.
+
+```bash
+curl -sI https://SITE.com/PAGE/ | grep -i 'x-robots-tag'
+curl -s  https://SITE.com/PAGE/ | grep -oiE '<meta[^>]+name="robots"[^>]*>'
+```
+
+**Canonical tags are a signal, not a command.** Google may choose a different canonical than the one declared — especially when the declared canonical conflicts with internal links, redirects, sitemap entries, or hreflang. So "a canonical is present" is not the end of the check: confirm that the redirect target, `rel=canonical`, internal links, sitemap URL, and share URLs all agree on the same preferred URL. Disagreement among those signals is the actual finding, and Search Console's "Google-selected canonical" is where you confirm what Google actually chose.
+
+### Host canonicalization — check every variant
+
+A surprising share of real defects live here, and they are invisible from the homepage.
+
+```bash
+for u in "http://SITE.com/" "https://www.SITE.com/" "https://SITE.com/"; do
+  printf '%-34s %s hops -> %s\n' "$u" \
+    "$(curl -sL -m 20 -o /dev/null -w '%{num_redirects}' "$u")" \
+    "$(curl -sL -m 20 -o /dev/null -w '%{http_code} %{url_effective}' "$u")"
+done
+```
+
+A `000` status means curl could not connect at all. Diagnose it rather than reporting it as "slow": `nslookup www.SITE.com` distinguishes a missing DNS record (NXDOMAIN — the `www` host was never created, so visitors get a browser-level "server not found") from a TLS or timeout failure. This has appeared in live audits and is both severe and trivially fixable — a strong finding precisely because the owner can reproduce it on their phone in seconds.
+
 ## HTML head inspection (per page)
 
 ```bash
@@ -43,10 +68,25 @@ Things to look for in the head:
 
 ## Structured data enumeration
 
+**Check all three syntaxes.** Google reads JSON-LD, microdata, and RDFa. Grepping only for `application/ld+json` and finding nothing is *not* evidence that a page lacks structured data — many themes and site builders emit microdata exclusively. Claiming "no structured data" on such a site is the single most damaging false positive in this skill; see `common-false-positives.md`.
+
 ```bash
-# Pull all JSON-LD blocks from a page
-curl -s https://SITE.com/PAGE/ | grep -A1 'application/ld+json' | grep -oE '"@type":"[^"]+"' | sort -u
+# JSON-LD — block count, then types
+curl -s https://SITE.com/PAGE/ | grep -oiF 'application/ld+json' | wc -l
+curl -s https://SITE.com/PAGE/ | grep -oE '"@type"[[:space:]]*:[[:space:]]*"[^"]+"' | sort -u
+
+# Microdata — types AND properties (properties are where the real gaps are)
+curl -s https://SITE.com/PAGE/ | grep -oE 'itemtype="[^"]*"' | sort -u
+curl -s https://SITE.com/PAGE/ | grep -oE 'itemprop="[^"]*"' | sort -u
+
+# RDFa
+curl -s https://SITE.com/PAGE/ | grep -oE 'typeof="[^"]*"' | sort -u
+
+# Is a plugin generating schema (i.e. might JS add more on Google's render pass)?
+curl -s https://SITE.com/PAGE/ | grep -oiE 'yoast|rankmath|aioseo|seopress|schema[a-z-]*\.js' | sort -u
 ```
+
+**Enumerate properties, not just types.** The common real finding is a correctly-typed but hollow entity — the right `@type` with none of the properties that matter. A `LocalBusiness` with `name` and `url` but no `address` fails even Google's required-property bar while looking present to a shallow check.
 
 Cross-reference the page type against `structured-data-checklist.md` to identify real gaps vs. confabulated ones. A homepage that has WebSite + Organization + WebApplication + FAQPage is well-served; an article page that has only BreadcrumbList is missing the Article schema.
 

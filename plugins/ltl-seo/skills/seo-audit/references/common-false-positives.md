@@ -28,11 +28,33 @@ A catalog of specific claims AI audits routinely make that are usually wrong, pl
 
 ## "No JSON-LD / structured data detected"
 
-**Why it's usually wrong:** Same as above — `<script type="application/ld+json">` blocks live in head or just before `</body>`.
+**Why it's usually wrong (two separate reasons):**
 
-**Verify:** `curl -s https://SITE.com/PAGE/ | grep -c 'application/ld+json'` then enumerate types.
+**Reason 1 — you didn't look in the head.** `<script type="application/ld+json">` blocks live in head or just before `</body>`, invisible to any auditor reading rendered visible content.
 
-**Rebuttal:** "Page contains N JSON-LD blocks of types [list]." If gaps exist, name them specifically rather than claiming "missing."
+**Reason 2 — JSON-LD is not the only syntax, and this one bites hard.** Google reads **three** structured-data syntaxes: JSON-LD, **microdata** (`itemscope` / `itemtype` / `itemprop`), and **RDFa** (`typeof` / `property`). A `grep` for `application/ld+json` returning zero tells you nothing about the other two. Many WordPress themes, page builders, and site builders emit microdata exclusively — so "0 JSON-LD blocks" is routinely a site with perfectly valid, Google-readable markup.
+
+This is the highest-cost false positive in the catalog, because "you have no structured data" is exactly the claim a client's developer disproves in one view-source — and it discredits every other finding in the report.
+
+**Verify all three before any absence claim:**
+
+```bash
+curl -s https://SITE.com/PAGE/ | grep -oiF 'application/ld+json' | wc -l          # JSON-LD blocks
+curl -s https://SITE.com/PAGE/ | grep -oE '"@type"[^,}]*' | sort -u              # JSON-LD types
+curl -s https://SITE.com/PAGE/ | grep -oE 'itemtype="[^"]*"' | sort -u           # microdata types
+curl -s https://SITE.com/PAGE/ | grep -oE 'itemprop="[^"]*"' | sort -u           # microdata properties
+curl -s https://SITE.com/PAGE/ | grep -oE 'typeof="[^"]*"' | sort -u             # RDFa types
+```
+
+**Rebuttal:** "Page declares [types] via [JSON-LD / microdata / RDFa]." If gaps exist, name them at the *property* level rather than the type level.
+
+**The far stronger finding is usually "present but hollow."** A page can declare exactly the right type and populate almost none of the properties that matter. Example from a live audit: a salon declared `schema.org/HairSalon` — a valid `LocalBusiness` subtype — with only `name`, `logo` and `url`. No `address` (which Google lists as *required*), no `telephone`, no `openingHoursSpecification`, no `geo`. "Your markup is incomplete in these four named fields" is precise, checkable, and something a developer will agree with. "You have no structured data" is false. Prefer the first every time.
+
+## "Site has no H1" / heading claims
+
+**Why it needs care:** zero-`<h1>` pages are genuinely common and it is a real finding — but the check must be run, and it must survive the rendering caveat (some builders inject headings client-side).
+
+**Verify:** `curl -s https://SITE.com/ | grep -oiE '<h1[ >]' | wc -l` and pull the full outline with `grep -oiE '<h(1|2|3)[^>]*>[^<]{1,90}'` so you can show the actual hierarchy rather than asserting it.
 
 ## "Missing meta descriptions"
 
@@ -63,6 +85,23 @@ A catalog of specific claims AI audits routinely make that are usually wrong, pl
 **Verify:** Search current Google Search Central docs for "FAQPage structured data" — confirm the May 2026 removal still stands.
 
 **Rebuttal:** "FAQ rich results were removed for all sites in May 2026; FAQPage markup is still parsed for entity understanding but no longer produces any visible SERP rich result. Worth keeping/adding only for entity recognition, not for SERP real estate."
+
+**Do not tell a client to strip existing FAQ markup.** Google has said unused structured data causes no problems for Search. Removing it is make-work.
+
+**Raise this one unprompted when the page has a visible FAQ section.** Automated tools and competing audits still recommend FAQ schema for rich snippets. Saying "the tools will tell you to add this, and it has produced nothing since May 2026" is the cheapest available proof that the audit is current rather than generated.
+
+## "Add HowTo schema" — and the other retired rich-result types
+
+**Why it's STALE:** a batch of rich-result types has been retired, and recommendations for them still circulate widely in tools and training data.
+
+- **HowTo** — removed (2023); documentation and case study withdrawn.
+- **Retired in the 2025 search-results simplification:** Book Actions, Course Info, Claim Review, Estimated Salary, Learning Video, Special Announcement, Vehicle Listing.
+- **Practice Problems** — deprecation notice added; support removed from Search Console rich-result reporting, the Rich Results Test, and search-appearance filters from January 2026.
+- Retired SERP features often confused with structured-data types: nutrition facts, nearby offers and events, local bikeshare station status, TV season selector.
+
+**Verify:** check the type's page in the Search Central structured-data gallery for a deprecation notice before recommending it.
+
+**Rebuttal:** "[Type] no longer produces a rich result. The Schema.org type is still valid and may aid entity understanding, but there is no SERP feature left to earn." Note the distinction that matters: absence from the Rich Results Test means the type is not *eligible*, not that the markup is *invalid*.
 
 ## "Add AMP"
 

@@ -15,3 +15,8 @@ node_modules/
 # Local env / secrets
 .env
 .env.*
+
+# Local tool artifacts (vector stores, indexes)
+*.db
+*.sqlite
+*.sqlite3
