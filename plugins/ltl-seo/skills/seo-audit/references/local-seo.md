@@ -66,8 +66,10 @@ page worth re-reading.
 
 - **Required:** `name`, `address` (a `PostalAddress`).
 - **Recommended:** `telephone`, `geo` (`GeoCoordinates`), `openingHoursSpecification`,
-  `priceRange`, `url`, plus `aggregateRating` / `review` **only where the site
-  genuinely captures reviews about other businesses** — never self-declared.
+  `priceRange`, `url`.
+- **Do not add `aggregateRating` / `review` to a business's own `LocalBusiness`
+  entity expecting stars.** See the self-serving review rule below — this is one
+  of the most confidently-given wrong recommendations in local SEO.
 - **Use the most specific subtype**, not bare `LocalBusiness`: `AutoRepair`,
   `HairSalon`, `Dentist`, `Restaurant`, `Plumber`, `DaySpa`, `HealthClub`, etc.
   `LocalBusiness` is itself a subtype of `Organization`, so the Organization
@@ -130,17 +132,49 @@ Two specific defects worth checking for, both seen in live audits:
   real, cheap gap. Fix it in service-area copy that reads naturally, not by
   stuffing town names.
 
-## Reviews — the policy boundary
+## Reviews — two separate boundaries
 
-Reviews drive prominence, which makes them a magnet for bad advice. Recommend
-earning and responding to genuine reviews under each platform's rules. Never
-recommend or facilitate buying, fabricating, gating (soliciting only from
-customers likely to be positive), or incentivizing reviews in prohibited ways.
-Never mark up self-declared ratings the site did not actually collect — that
-violates Google's structured-data policies and risks manual action.
+### 1. Self-serving review markup is ineligible — do not recommend it
 
-Responding to reviews is within the client's control, costs nothing, and is a
-legitimate recurring deliverable for a retainer.
+This is the one to get right, because the wrong version is extremely common and
+sounds authoritative. Google's review-snippet documentation states:
+
+> "If the entity that's being reviewed controls the reviews about itself, their
+> pages that use `LocalBusiness` or any other type of `Organization` structured
+> data are ineligible for star review feature."
+
+The rule in practice:
+
+- A review about entity A, published on entity A's own website, is **self-serving** —
+  whether hand-written into the markup **or pulled in by an embedded third-party
+  widget**, explicitly including Google Business and Facebook review widgets.
+- `LocalBusiness` (and every subtype — `AutoRepair`, `HairSalon`, `Dentist`…) and
+  `Organization` are therefore **not eligible for review stars from on-site markup**.
+- Review snippets remain available for other types where the reviewer isn't the
+  reviewed party — `Product`, `Recipe`, `Book`, `Movie`, `Course`, `SoftwareApplication`.
+
+**Where a local business's stars actually come from: the Google Business Profile.**
+Local-pack and knowledge-panel star ratings are driven by real GBP reviews, not
+by JSON-LD on the site. So the correct recommendation is "earn reviews on your
+Business Profile," never "mark up your reviews for stars."
+
+**Two audit consequences:**
+
+- **Don't flag missing `aggregateRating` on a LocalBusiness as a gap.** It isn't
+  one. It's ineligible.
+- **Don't tell a client their competitor is "eligible for stars" because you found
+  `AggregateRating` in the competitor's markup.** Plenty of local sites publish
+  self-serving review markup that earns them nothing. Check whether stars
+  actually appear in results before making a competitive claim — a claim the
+  client can disprove with one search is worse than no claim at all.
+
+### 2. How reviews are obtained
+
+Recommend earning and responding to genuine reviews under each platform's rules.
+Never recommend or facilitate buying, fabricating, gating (soliciting only from
+customers likely to leave positive reviews), or incentivizing reviews in
+prohibited ways. Responding to reviews is free, entirely within the client's
+control, and a legitimate recurring retainer deliverable.
 
 ## What you cannot check without their data
 

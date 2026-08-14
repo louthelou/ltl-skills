@@ -103,6 +103,18 @@ curl -s https://SITE.com/PAGE/ | grep -oE 'typeof="[^"]*"' | sort -u            
 
 **Rebuttal:** "[Type] no longer produces a rich result. The Schema.org type is still valid and may aid entity understanding, but there is no SERP feature left to earn." Note the distinction that matters: absence from the Rich Results Test means the type is not *eligible*, not that the markup is *invalid*.
 
+## "Add AggregateRating / Review schema to get star ratings" (on a local business)
+
+**Why it's WRONG:** self-serving reviews are ineligible. Google: *"If the entity that's being reviewed controls the reviews about itself, their pages that use `LocalBusiness` or any other type of `Organization` structured data are ineligible for star review feature."* A review about a business, published on that business's own site, is self-serving — including when it arrives through an embedded Google Business or Facebook reviews widget.
+
+So a `LocalBusiness` without `aggregateRating` has **no gap to fix**, and adding it produces nothing.
+
+**Where local stars actually come from:** the Google Business Profile, driven by real GBP reviews. On-site markup is not the lever.
+
+**The trap this creates in competitor analysis.** Finding `AggregateRating` and `Review` in a competitor's markup does *not* mean the competitor is earning stars — plenty of local sites publish ineligible self-serving markup. Before claiming "your competitor is eligible for star ratings and you aren't," run the search and look. A competitive claim the client can disprove in one query is worse than making no claim.
+
+**Rebuttal:** "`aggregateRating` on your own `LocalBusiness` is ineligible for review stars under Google's self-serving review policy, so adding it won't produce them. Star ratings for a local business come from Google Business Profile reviews. Review snippets do still work for `Product`, `Recipe`, `Course` and similar types, where the reviewer isn't the reviewed party."
+
 ## "Add AMP"
 
 **Why it's WRONG:** AMP was deprecated as a Top Stories requirement in 2021 and broadly de-emphasized after. Modern sites don't need it.

@@ -89,7 +89,7 @@ Full treatment in `local-seo.md` — including Business Profile primacy, which o
 
 **One entity per physical location.** A two-location business needs two nodes, each with its own address and hours, ideally on its own location page.
 
-**Avoid:** `aggregateRating` or `review` describing the business's *own* self-declared ratings. Those properties are for sites that genuinely capture reviews about other businesses. Marking up ratings the site never collected violates Google's structured-data policies and risks manual action.
+**Avoid — and this one is counterintuitive:** `aggregateRating` / `review` on the business's own entity. Google: *"If the entity that's being reviewed controls the reviews about itself, their pages that use `LocalBusiness` or any other type of `Organization` structured data are ineligible for star review feature."* That covers reviews embedded via third-party widgets (Google Business, Facebook) as well as hand-written markup. So a missing `aggregateRating` on a `LocalBusiness` is **not a gap** — it's ineligible, and recommending it produces nothing. Local star ratings come from the Google Business Profile. Fabricating ratings the site never collected is separately a policy violation that risks manual action.
 
 **The usual real finding is a hollow entity, not a missing one** — the correct type declared with only `name`, `logo` and `url`, missing the required `address`. Enumerate properties, not just types, and check microdata as well as JSON-LD.
 
