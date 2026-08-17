@@ -5,13 +5,13 @@
     "name": "Lou Lohman"
   },
   "metadata": {
-    "description": "Lou Lohman's Claude Code skills — a verification-first all-in-one SEO auditor and a guided cross-codebase parity workflow.",
-    "version": "1.0.0"
+    "description": "Lou Lohman's Claude Code skills — a verification-first all-in-one SEO auditor, a guided cross-codebase parity workflow, and token-lean compaction-surviving persistence.",
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "ltl-seo",
-      "description": "All-in-one, verification-first SEO: technical, on-page, structured data, internal linking & site architecture, keyword & content strategy, competitor analysis, AEO/AI-visibility, and programmatic-SEO-at-scale. Inspects the real source/HTML before claiming anything is missing, web-verifies time-sensitive guidance, and pushes back on deprecated tactics.",
+      "description": "All-in-one, verification-first SEO: technical, on-page, structured data, local SEO (Business Profile, LocalBusiness markup, NAP), internal linking & site architecture, keyword & content strategy, competitor analysis, AEO/AI-visibility, programmatic-SEO-at-scale, and measurement/iteration. Inspects the real source/HTML (all three structured-data syntaxes) before claiming anything is missing, web-verifies time-sensitive guidance, pushes back on deprecated tactics, and never promises rankings.",
       "author": {
         "name": "Lou Lohman"
       },
