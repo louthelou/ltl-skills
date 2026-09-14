@@ -89,6 +89,13 @@ Check for manual actions in Search Console first. Attributing a drop to an
 update, when it was a broken redirect or a consent-banner change, is the fastest
 way to lose credibility and to fix the wrong thing.
 
+**Line the drop up against the Search Status Dashboard** (dated table in
+`current-docs-to-verify.md`). Real example: a content site's Google organic traffic
+collapsed on 2026-08-18, the first day of the August 2026 spam update, which
+targets scaled and thin programmatic content. That is a strong lead, not a
+verdict: rule out tracking and indexation first, then audit the site against the
+*named* policies of that update rather than "spam" in general.
+
 ## Reading results honestly
 
 - Compare like windows (same weekday composition, comparable seasonality) and use

@@ -4,6 +4,8 @@ Authoritative Google and Schema.org documentation URLs to web-search BEFORE incl
 
 When in doubt, search for the topic + "Google Search Central" or "developers.google.com/search" to get the current authoritative position.
 
+**Last full currency pass: 2026-09-14.** Google's documentation-updates page (https://developers.google.com/search/updates) showed only two entries since 2026-08-16: a new page on regional differences in the Search experience (Sept 8) and an update to the European Search Dataset Licensing page (Aug 31). No structured-data or rich-result changes since the June 2026 removals. Ranking updates are tracked in the table below.
+
 ## Always check before recommending
 
 ### Structured data / rich results
@@ -48,6 +50,7 @@ When in doubt, search for the topic + "Google Search Central" or "developers.goo
 - **Snippets and meta descriptions:** https://developers.google.com/search/docs/appearance/snippet
 - **Crawlable links:** https://developers.google.com/search/docs/crawling-indexing/links-crawlable
 - **Localized versions / hreflang:** https://developers.google.com/search/docs/specialty/international/localized-versions
+- **Regional differences in the Search experience (added 2026-09-08):** https://developers.google.com/search/docs/appearance/aggregator-features
 - **Latest documentation updates (check when something feels stale):** https://developers.google.com/search/updates
 
 ### Indexing & canonical
@@ -65,6 +68,34 @@ When in doubt, search for the topic + "Google Search Central" or "developers.goo
 
 - **Search Central — link best practices:** https://developers.google.com/search/docs/crawling-indexing/links-crawlable
 - **JavaScript SEO:** https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics
+
+
+## Ranking updates — know these before diagnosing any drop
+
+Google confirms ranking updates on the Search Status Dashboard
+(https://status.search.google.com/products/rGHU1u87FJnkP6W2GwMi/history). Before
+attributing a traffic change to "an update," line the dates up — and keep the
+order of checks from `measurement-and-iteration.md` (tracking, URL mapping,
+indexation, seasonality first).
+
+Confirmed 2026 updates, verified against the dashboard on 2026-09-14:
+
+| Update | Dates | What it is |
+|---|---|---|
+| February 2026 Discover update | Feb 2026 | Discover only |
+| March 2026 core update | Mar 2026 | Broad core |
+| March 2026 spam update | Mar 2026 | SpamBrain enforcement |
+| May 2026 core update | May 2026 | Broad core, earlier than the usual mid-year slot |
+| June 2026 spam update | 2026-06-24 to 06-26 | "Normal" spam update, no new policies; SpamBrain |
+| **August 2026 spam update** | 2026-08-18 to 08-21 | Targets scaled content abuse (incl. mass AI pages that add nothing), expired-domain abuse, cloaking, doorways, hidden text, keyword stuffing, scraping. Google stated on 2026-08-18 that it does **not** target link spam or site-reputation abuse. |
+
+No September 2026 update announced as of 2026-09-14. This table is a snapshot —
+re-check the dashboard on every engagement.
+
+Practical reading: a site whose traffic fell 2026-08-18 to 08-21 should be checked
+against the *scaled content* and *doorway / thin page* policies first
+(programmatic pages differing only by a city name are squarely in scope), not
+against link spam. See `programmatic-seo-at-scale.md`.
 
 ## Often-stale topics (high verification priority)
 
