@@ -1,0 +1,41 @@
+{
+  "description": "ltl-persistence hooks. PreCompact: tell the compaction summary exactly which handoff file to point at and whether it is fresh, stale or missing. SessionStart: after a compact, resume, clear or startup, report the touched projects' handoffs and inline the primary one. Stop: block the end of a turn once while a project this session wrote to has a missing or stale handoff. All three are fail-open and read-only except the small state file under ~/.claude/ltl-persistence/.",
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/skills/persistence/assets/precompact-hook.js\"",
+            "timeout": 20,
+            "statusMessage": "Persistence: handoff checkpoint"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/skills/persistence/assets/session-start-hook.js\"",
+            "timeout": 20,
+            "statusMessage": "Persistence: loading handoff"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"${CLAUDE_PLUGIN_ROOT}/skills/persistence/assets/stop-hook.js\"",
+            "timeout": 20,
+            "statusMessage": "Persistence: handoff freshness check"
+          }
+        ]
+      }
+    ]
+  }
+}

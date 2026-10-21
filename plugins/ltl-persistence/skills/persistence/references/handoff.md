@@ -4,7 +4,9 @@ A HANDOFF is the single "resume-here" snapshot a fresh or post-compaction sessio
 
 ## One HANDOFF per project — its own sessions maintain it
 
-Each project gets its **own** HANDOFF at its root, wired to its own auto-loaded layer; they're never shared. **Checkpoint and prune it from *within* that project, where the live context is — never edit another project's HANDOFF from a different session, or you're pruning state you can't see.** And not every project needs one: a HANDOFF is for ongoing volatile work; a stable repo's state lives in git + `CLAUDE.md`.
+Each project gets its **own** HANDOFF at its root, wired to its own auto-loaded layer; they're never shared. **Checkpoint and prune it from *within* that project, where the live context is — never edit another project's HANDOFF from a different session, or you're pruning state you can't see.** And not every project needs one: a HANDOFF is for ongoing volatile work; a stable repo's state lives in git + `CLAUDE.md`. Tell the hooks about that choice with one line in the project's `CLAUDE.md` (an HTML comment works): `ltl-persistence: handoff=none` opts the project out; `ltl-persistence: handoff=../Other-Project/HANDOFF.md` makes it share another project's file (a website owned by a venture project, say).
+
+**Create it on day one.** The commonest failure is a handoff that does not exist when compaction happens: the next session then has to rebuild it from the summary, which is exactly the lossy step this skill exists to avoid. The Stop hook enforces this for any project a session writes to.
 
 ## Lean structure (top-to-bottom = most-needed first)
 
@@ -22,7 +24,8 @@ A HANDOFF only helps if an *auto-loaded* file points to it. After a compaction t
 - **Project has a `CLAUDE.md`:** add one line near the top —
   `> On resume, read ./HANDOFF.md first for current state.`
 - **User uses the memory feature:** add the same one-liner to the auto-loaded memory index (e.g. `MEMORY.md`).
-- **Neither:** the handoff still helps within a session, but say plainly that it won't be auto-found after a compaction unless they add the pointer or install the PreCompact hook.
+- **Hooks installed:** the PreCompact hook names the exact file for the summary and the SessionStart hook inlines it after a compaction or resume, so discovery no longer depends on anyone having edited `CLAUDE.md`. Keep the one-liner anyway; it costs nothing and covers sessions without hooks.
+- **Neither:** the handoff still helps within a session, but say plainly that it won't be auto-found after a compaction unless they add the pointer or install the hooks.
 
 A handoff nothing references is invisible post-compact. This wiring is the whole difference between "I keep notes" and "my notes actually load."
 

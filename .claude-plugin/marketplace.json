@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Lou Lohman's Claude Code skills — a verification-first all-in-one SEO auditor, a guided cross-codebase parity workflow, and token-lean compaction-surviving persistence.",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -31,7 +31,7 @@
     },
     {
       "name": "ltl-persistence",
-      "description": "Token-lean, compaction-surviving persistence: set up and maintain a 'resume-here' handoff, an optional user-defined standing-rules file, and an opt-in PreCompact hook — all wired into Claude Code's native auto-loaded layer so work survives compaction at minimum token cost. Ships zero rules of its own.",
+      "description": "Token-lean, compaction-surviving persistence: set up and maintain a 'resume-here' handoff, an optional user-defined standing-rules file, and opt-in hooks (PreCompact names the exact handoff for the compaction summary, SessionStart re-injects it after a compact or resume, Stop blocks the end of a turn while a changed project's handoff is missing or stale) — all wired into Claude Code's native auto-loaded layer so work survives compaction at minimum token cost. Ships zero rules of its own.",
       "author": {
         "name": "Lou Lohman"
       },

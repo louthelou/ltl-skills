@@ -1,6 +1,6 @@
 ---
 name: persistence
-description: Set up and maintain token-lean, compaction-surviving persistence for a project — a "resume-here" HANDOFF doc, an optional user-defined standing-rules file, and an opt-in PreCompact hook, all wired into Claude Code's native auto-loaded layer (CLAUDE.md / memory) so a post-compaction or brand-new session reliably picks up where work left off, without bloating the context window. Use whenever the user wants to "not lose context when compacting", "remember this across sessions", "set up a handoff", "create standing rules", "checkpoint before compacting", "make my notes/CLAUDE.md survive a compact", or asks to improve Claude's persistence or memory. Ships zero rules of its own — it captures the user's.
+description: Set up and maintain token-lean, compaction-surviving persistence for a project — a "resume-here" HANDOFF doc, an optional user-defined standing-rules file, and opt-in hooks (PreCompact, SessionStart, Stop) that keep the handoff pointed-at, re-injected and fresh, all wired into Claude Code's native auto-loaded layer (CLAUDE.md / memory) so a post-compaction or brand-new session reliably picks up where work left off, without bloating the context window. Use whenever the user wants to "not lose context when compacting", "remember this across sessions", "set up a handoff", "create standing rules", "checkpoint before compacting", "make my notes/CLAUDE.md survive a compact", or asks to improve Claude's persistence or memory. Ships zero rules of its own — it captures the user's.
 ---
 
 # Persistence (compaction-surviving, token-lean)
@@ -21,16 +21,16 @@ Both are solved by the same thing: a lean, wired, on-demand-structured persisten
 - **HANDOFF** — a lean "resume-here" snapshot: current state, open threads, deferred gaps. **One per project, maintained only by sessions working in that project** (don't cold-edit another project's HANDOFF). → `references/handoff.md`
 - **Discovery wiring** — a one-line pointer in the auto-loaded layer so the handoff is *found* after a compaction. The crux. → `references/handoff.md`
 - **Standing rules** (optional) — durable, user-defined behavioral rules. **Ships empty; captures the user's own.** → `references/standing-rules.md`
-- **PreCompact hook** (opt-in) — fires at compaction time to guarantee the "read the handoff" pointer survives. → `references/precompact-hook.md`
+- **Hooks** (opt-in; three small scripts on one shared library) — **PreCompact** tells the compaction summary exactly which handoff file to point at and whether it is fresh, stale or missing; **SessionStart** re-injects the handoff after a compact, resume, clear or startup; **Stop** blocks the end of a turn once while a project this session wrote to has a missing or stale handoff, so the checkpoint actually gets written. → `references/precompact-hook.md`
 - **Leanness discipline** — how to keep all of it small. → `references/leanness.md`
 
 ## Four modes
 
 ### 1. Set up (first run in a project)
 1. **Detect the native layer — don't assume.** Is there a project `CLAUDE.md`? Does the user use the memory feature (an auto-loaded `MEMORY.md`)? What's the project root; is it git-tracked?
-2. **Create a lean HANDOFF** from `assets/handoff.template.md` at the project root (or a path the user picks).
+2. **Create a lean HANDOFF** from `assets/handoff.template.md` at the project root (or a path the user picks). **Do it on day one**, not once the work "deserves" it: a handoff that does not exist when compaction happens cannot be pointed at, and the next session has to rebuild it from the lossy summary — the exact failure this skill exists to prevent.
 3. **Wire discovery** (the step that makes it survive): add a one-line pointer to the auto-loaded layer — *"On resume, read ./HANDOFF.md first for current state."* Without this, the handoff is invisible after a compaction.
-4. **Offer** (don't impose) the empty standing-rules scaffold and the PreCompact hook.
+4. **Offer** (don't impose) the empty standing-rules scaffold and the hooks — all three; the Stop hook is the one that makes checkpointing happen without anyone remembering.
 
 ### 2. Checkpoint (the recurring action)
 Run at milestones, before a likely compaction, or at session end:
@@ -51,5 +51,5 @@ Apply the leanness pass to existing persistence files (handoff, rules, `CLAUDE.m
 ## Honest limits (tell the user)
 
 - This **overlaps `CLAUDE.md` / memory by design** — it's workflow + wiring + discipline, not new storage. It makes the native files work harder for fewer tokens, rather than replacing them.
-- The **PreCompact hook nudges and wires; it can't author** the handoff — that needs a model turn. "Automatic" means "automatically reminded and correctly pointed," not "written by the hook."
+- The **hooks can't author** the handoff — that needs a model turn. With all three installed, "automatic" means: the Stop hook makes the model write or refresh the handoff before a turn ends whenever the project changed and the handoff is more than `graceMinutes` (default 20) behind; PreCompact makes the summary point at the exact file and carry whatever the handoff lacks; SessionStart injects it afterwards. With only PreCompact, "automatic" means "correctly pointed," nothing more.
 - It **can't recover context already lost** to a compaction that happened before setup. Set up early.
