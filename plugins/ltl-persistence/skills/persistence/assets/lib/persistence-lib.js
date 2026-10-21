@@ -39,8 +39,10 @@ const SHELL_TOOLS = new Set(["Bash", "PowerShell"]);
 // Absolute paths: C:\x, C:/x, /c/x (Git Bash). Stops at whitespace, quotes and shell operators.
 const PATH_RE = /(?:[A-Za-z]:[\\/]|\/[a-zA-Z]\/)[^\s"'`;&|<>()]+/g;
 // Shell commands that change files, as a heuristic for "this session wrote here".
+// Deliberately excludes "run" verbs (node, python, npm, make, wrangler...): running a project's
+// script is not a change to that project, and real file changes still surface through git.
 const MUTATING_RE =
-  /(?:^|[\s;|&(])(?:tee|cp|mv|rm|mkdir|touch|sed\s+-i|perl\s+-\w*i|python3?|py|node|npm|npx|pnpm|yarn|cargo|dotnet|make|msbuild|git\s+(?:add|commit|push|mv|rm|checkout|switch|merge|rebase|reset|stash)|wrangler|Set-Content|Out-File|Add-Content|New-Item|Copy-Item|Move-Item|Remove-Item|Rename-Item)\b/i;
+  /(?:^|[\s;|&(])(?:tee|cp|mv|rm|mkdir|touch|sed\s+-i|perl\s+-\w*i|git\s+(?:add|commit|mv|rm|checkout|switch|merge|rebase|reset|stash)|Set-Content|Out-File|Add-Content|New-Item|Copy-Item|Move-Item|Remove-Item|Rename-Item)\b/i;
 // A redirect to a real file (not /dev/null, $null, NUL or another descriptor).
 const REDIRECT_RE = /(?:^|[^<>])>>?\s*(?!&|\/dev\/null|\$null|NUL\b)["']?[^\s"'<>|&;]/i;
 

@@ -25,7 +25,7 @@ ltl-persistence: handoff=../Other-Project/HANDOFF.md
 
 ## What "stale" means
 
-The handoff's mtime is compared with the project's latest change: the last write this session made (file paths from Write/Edit, or a shell command that names the project and looks mutating), the mtimes of files `git status` reports as changed, and the last commit time. If the latest change is more than `graceMinutes` newer than the handoff, it is stale. The grace window means a turn that edits a file five minutes after the handoff was refreshed is not nagged; a session that edits for an hour without a checkpoint is blocked once, at the end of that turn.
+The handoff's mtime is compared with the project's latest change: the last write this session made (file paths from Write/Edit, or a shell command that names the project and looks mutating: copies, moves, deletes, in-place edits, redirects, git commits; *running* a project's script with node, python, npm and the like does not count), the mtimes of files `git status` reports as changed, and the last commit time. If the latest change is more than `graceMinutes` newer than the handoff, it is stale. The grace window means a turn that edits a file five minutes after the handoff was refreshed is not nagged; a session that edits for an hour without a checkpoint is blocked once, at the end of that turn.
 
 ## Install
 
