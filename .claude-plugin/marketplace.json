@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Lou Lohman's Claude Code skills — a verification-first all-in-one SEO auditor, a guided cross-codebase parity workflow, and token-lean compaction-surviving persistence.",
-    "version": "1.2.0"
+    "version": "1.2.1"
   },
   "plugins": [
     {

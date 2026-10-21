@@ -42,9 +42,17 @@ const PATH_RE = /(?:[A-Za-z]:[\\/]|\/[a-zA-Z]\/)[^\s"'`;&|<>()]+/g;
 // Deliberately excludes "run" verbs (node, python, npm, make, wrangler...): running a project's
 // script is not a change to that project, and real file changes still surface through git.
 const MUTATING_RE =
-  /(?:^|[\s;|&(])(?:tee|cp|mv|rm|mkdir|touch|sed\s+-i|perl\s+-\w*i|git\s+(?:add|commit|mv|rm|checkout|switch|merge|rebase|reset|stash)|Set-Content|Out-File|Add-Content|New-Item|Copy-Item|Move-Item|Remove-Item|Rename-Item)\b/i;
+  /(?:^|[\s;|&(])(?:tee|cp|mv|rm|mkdir|touch|sed\s+-i|perl\s+-\w*i|git\s+(?:-C\s+\S+\s+)?(?:add|commit|mv|rm|checkout|switch|merge|rebase|reset|stash)|Set-Content|Out-File|Add-Content|New-Item|Copy-Item|Move-Item|Remove-Item|Rename-Item)\b/i;
 // A redirect to a real file (not /dev/null, $null, NUL or another descriptor).
 const REDIRECT_RE = /(?:^|[^<>])>>?\s*(?!&|\/dev\/null|\$null|NUL\b)["']?[^\s"'<>|&;]/i;
+// A shell command is judged per segment (a line, or a part split on ; && || and |): a path is
+// written when its own segment mutates, or when it anchors the command (cd, Set-Location, git -C,
+// a variable assignment) and some segment mutates. So "cd X && git commit" writes X, a heredoc
+// into $SRC writes the project SRC points at, and running one project's script in a command that
+// also deletes a scratch file elsewhere does not mark that project as changed (1.1.2).
+const SEGMENT_RE = /\r?\n|&&|\|\||[;|]/;
+const ANCHOR_RE = /^\s*(?:(?:export\s+)?[A-Za-z_]\w*=|\$(?:env:)?[A-Za-z_]\w*\s*=|(?:cd|pushd|chdir|sl|Set-Location|Push-Location)\s)/i;
+const GIT_C_RE = /\bgit\s+-C\s/i;
 
 const TEMPLATE_PATH = path.join(__dirname, "..", "handoff.template.md").replace(/\\/g, "/");
 const STATE_DIR = path.join(os.homedir(), ".claude", "ltl-persistence");
@@ -227,6 +235,24 @@ function extractPaths(str) {
   return out;
 }
 
+/** Every path a shell command names, and the subset it writes (see SEGMENT_RE). */
+function classifyShell(command) {
+  const paths = [];
+  const writes = new Set();
+  const anchors = [];
+  let mutates = false;
+  for (const seg of String(command || "").split(SEGMENT_RE)) {
+    const mut = MUTATING_RE.test(seg) || REDIRECT_RE.test(seg);
+    if (mut) mutates = true;
+    const ps = extractPaths(seg);
+    paths.push(...ps);
+    if (mut) for (const p of ps) writes.add(p);
+    else if (ANCHOR_RE.test(seg) || GIT_C_RE.test(seg)) anchors.push(...ps);
+  }
+  if (mutates) for (const p of anchors) writes.add(p);
+  return { paths, writes: [...writes], mutates };
+}
+
 function textOf(content) {
   if (typeof content === "string") return content;
   if (Array.isArray(content)) return content.map((b) => (b && typeof b.text === "string" ? b.text : "")).join("\n");
@@ -235,7 +261,9 @@ function textOf(content) {
 
 /**
  * Scan the transcript for tool calls that name paths. Returns
- *   { ok, events: [{ts, tool, paths, files, write, shell}], summaryPaths: [] }
+ *   { ok, events: [{ts, tool, paths, files, writePaths, write, shell}], summaryPaths: [] }
+ * writePaths are the paths the call wrote (Write/Edit targets; a shell command's mutated or
+ * anchoring paths); every other path is a mention.
  * Only assistant records are read (api-request blobs repeat history and would skew recency).
  */
 function scanTranscript(file, cfg, tailBytes) {
@@ -271,12 +299,15 @@ function scanTranscript(file, cfg, tailBytes) {
       }
       let write = WRITE_TOOLS.has(name);
       let shell = false;
+      const writePaths = write ? files.slice() : [];
       if (SHELL_TOOLS.has(name) && typeof input.command === "string") {
         shell = true;
-        paths.push(...extractPaths(input.command));
-        if (MUTATING_RE.test(input.command) || REDIRECT_RE.test(input.command)) write = true;
+        const c = classifyShell(input.command);
+        paths.push(...c.paths);
+        writePaths.push(...c.writes);
+        if (c.mutates) write = true;
       }
-      if (paths.length) res.events.push({ ts, tool: name, paths, files, write, shell });
+      if (paths.length) res.events.push({ ts, tool: name, paths, files, writePaths, write, shell });
     }
   }
   return res;
@@ -296,15 +327,20 @@ function projectsFrom(scan, cfg) {
   };
   for (const ev of scan.events) {
     const dirs = new Set();
+    const written = new Set();
     for (const p of ev.paths) {
       const d = projectOf(p, cfg);
       if (d) dirs.add(d);
+    }
+    for (const p of ev.writePaths || []) {
+      const d = projectOf(p, cfg);
+      if (d) written.add(keyOf(d));
     }
     for (const d of dirs) {
       const pr = get(d);
       pr.lastAny = Math.max(pr.lastAny, ev.ts);
       pr.mentions++;
-      if (ev.write) {
+      if (written.has(keyOf(d))) {
         pr.lastWrite = Math.max(pr.lastWrite, ev.ts);
         if (ev.shell) pr.shellWriteTs = Math.max(pr.shellWriteTs, ev.ts);
       }
@@ -621,6 +657,7 @@ module.exports = {
   projectOf,
   isWorkspace,
   scanTranscript,
+  classifyShell,
   projectsFrom,
   handoffFor,
   gitSignals,
